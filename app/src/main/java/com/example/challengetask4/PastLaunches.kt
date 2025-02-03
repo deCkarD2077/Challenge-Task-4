@@ -20,7 +20,6 @@ class PastLaunches : BaseNavActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // Set title for the activity
         supportActionBar?.title = "Past Launches"
 
         // Fetch past launches

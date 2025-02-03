@@ -13,7 +13,6 @@ class LaunchViewModel : ViewModel(){
     val launches: LiveData<List<Launch>> = _launches
 
     private val _isLoading = MutableLiveData<Boolean>()
-    val isLoading: LiveData<Boolean> = _isLoading
 
     private val _errorMessage = MutableLiveData<String?>()
     val errorMessage: LiveData<String?> = _errorMessage

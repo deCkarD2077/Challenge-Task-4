@@ -18,9 +18,8 @@ class DetailActivity : BaseNavActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_detail) // Add this line to set the content view
+        setContentView(R.layout.activity_detail)
 
-        // Ensure this is being set so the drawer toggle is synced
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
 
