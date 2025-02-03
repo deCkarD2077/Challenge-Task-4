@@ -14,77 +14,19 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.navigation.NavigationView
 
-class PastLaunches : AppCompatActivity() {
-    private val launchViewModel: LaunchViewModel by viewModels()
-    private lateinit var drawerLayout: DrawerLayout
-    private lateinit var recyclerView: RecyclerView
-    private lateinit var toolbar: androidx.appcompat.widget.Toolbar
-    private val adapter = LaunchAdapter(emptyList())
-
+class PastLaunches : BaseNavActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        setContentView(R.layout.activity_past_launches)
 
-        //initialise views
-        drawerLayout = findViewById(R.id.drawerLayout)
-        recyclerView = findViewById(R.id.recyclerView)
-        toolbar = findViewById(R.id.toolbar)
-        val navView = findViewById<NavigationView>(R.id.navView)
+        // Set title for the activity
+        supportActionBar?.title = "Past Launches"
 
-        recyclerView.layoutManager = LinearLayoutManager(this)
-        recyclerView.adapter = adapter
+        // Fetch past launches
+        viewModel.fetchPastLaunches()
 
-// Setup Toolbar as ActionBar
-        setSupportActionBar(toolbar)
-        //setup the navigation drawer
-        setupNavigationDrawer(navView)
-        //observe view model
-        observeViewModel()
-        //initial data load
-
-        // Setup the DrawerToggle (hamburger icon)
-        val toggle = ActionBarDrawerToggle(
-            this, drawerLayout, toolbar,
-            R.string.navigation_drawer_open, R.string.navigation_drawer_close
-        )
-        drawerLayout.addDrawerListener(toggle)
-        toggle.syncState()
-
-        // Observe the ViewModel for updates
-        observeViewModel()
-
-        launchViewModel.fetchPastLaunches() // Fetch past launches
-    }
-
-    private fun setupNavigationDrawer(navView: NavigationView) {
-        navView.setNavigationItemSelectedListener { menuItem ->
-            when (menuItem.itemId) {
-                R.id.nav_upcoming -> {
-                    val intent = Intent(this, MainActivity::class.java)
-                    startActivity(intent)
-                }
-                R.id.nav_past -> {
-                    val intent = Intent(this, PastLaunches::class.java)
-                    startActivity(intent)
-                }
-            }
-            // Close drawer when item is clicked
-            drawerLayout.closeDrawers()
-            true
-        }
-    }
-
-    private fun observeViewModel() {
-        launchViewModel.launches.observe(this) { launches ->
+        // Observe launches data
+        viewModel.launches.observe(this) { launches ->
             adapter.updateData(launches)
-        }
-
-        //display toast if api fails to load data
-        launchViewModel.errorMessage.observe(this) { errorMessage ->
-            errorMessage?.let {
-                Toast.makeText(this, it, Toast.LENGTH_LONG).show()
-            }
         }
     }
 }

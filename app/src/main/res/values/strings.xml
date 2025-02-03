@@ -5,4 +5,5 @@
     <string name="mission_name">Mission Name</string>
     <string name="navigation_drawer_open">Open Drawer</string>
     <string name="navigation_drawer_close">Close Drawer</string>
+    <string name="launch_details">Launch Details</string>
 </resources>

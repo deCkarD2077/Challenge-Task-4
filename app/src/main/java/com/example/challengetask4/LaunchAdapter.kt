@@ -1,5 +1,6 @@
 package com.example.challengetask4
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,6 +22,14 @@ class LaunchAdapter(private var launches: List<Launch> = emptyList()) :
             missionName.text = launch.mission_name
             rocketName.text = launch.rocket.rocket_name
             launchDate.text = launch.launch_date_utc
+
+            // Set click listener for the item
+            view.setOnClickListener {
+                val intent = Intent(view.context, DetailActivity::class.java).apply {
+                    putExtra("launch_data", launch)
+                }
+                view.context.startActivity(intent)
+            }
         }
     }
 
