@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">ChallengeTask4</string>
+    <string name="launch_date">Launch Date</string>
+    <string name="rocket_name">Rocket Name</string>
+    <string name="mission_name">Mission Name</string>
+    <string name="navigation_drawer_open">Open Drawer</string>
+    <string name="navigation_drawer_close">Close Drawer</string>
+</resources>

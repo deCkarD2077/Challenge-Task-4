@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_upcoming"
+        android:icon="@drawable/rocket_launch_icon"
+        android:title="Upcoming Launches" />
+
+    <item
+        android:id="@+id/nav_past"
+        android:icon="@drawable/history_icon"
+        android:title="Past Launches" />
+</menu>
