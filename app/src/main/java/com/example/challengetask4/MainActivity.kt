@@ -17,6 +17,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.navigation.NavigationView
 
 class MainActivity : BaseNavActivity() {
+    override val hasRecyclerView: Boolean = true
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 

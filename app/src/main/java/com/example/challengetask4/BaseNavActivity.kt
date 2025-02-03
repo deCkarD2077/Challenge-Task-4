@@ -16,24 +16,24 @@ import com.google.android.material.navigation.NavigationView
 
 abstract class BaseNavActivity : AppCompatActivity() {
     protected lateinit var drawerLayout: DrawerLayout
-    protected lateinit var recyclerView: RecyclerView
     protected lateinit var toolbar: androidx.appcompat.widget.Toolbar
     protected val viewModel: LaunchViewModel by viewModels()
+
+    // Optional RecyclerView; Child activities can use it if needed
+    protected open val hasRecyclerView: Boolean = true
+    protected var recyclerView: RecyclerView? = null
     protected val adapter = LaunchAdapter(emptyList())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_base_nav)
+
         // Initialize views
         drawerLayout = findViewById(R.id.drawerLayout)
-        recyclerView = findViewById(R.id.recyclerView)
         toolbar = findViewById(R.id.toolbar)
         val navView = findViewById<NavigationView>(R.id.navView)
 
-        // Set up RecyclerView
-        recyclerView.layoutManager = LinearLayoutManager(this)
-        recyclerView.adapter = adapter
 
         // Set up Toolbar as ActionBar
         setSupportActionBar(toolbar)
@@ -49,25 +49,30 @@ abstract class BaseNavActivity : AppCompatActivity() {
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
 
+        // Conditionally initialize RecyclerView
+        if (hasRecyclerView) {
+            recyclerView = findViewById(R.id.recyclerView)
+            recyclerView?.apply {
+                layoutManager = LinearLayoutManager(this@BaseNavActivity)
+                adapter = this@BaseNavActivity.adapter
+            }
+        }
+
         // Observe ViewModel for updates
         observeViewModel()
     }
 
-    fun setupNavigationDrawer(navView: NavigationView) {
+    open fun setupNavigationDrawer(navView: NavigationView) {
         navView.setNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.nav_upcoming -> {
-                    if (this !is MainActivity) {
                         val intent = Intent(this, MainActivity::class.java)
-                    startActivity(intent)
-                    }
+                        startActivity(intent)
                 }
 
                 R.id.nav_past -> {
-                    if (this !is PastLaunches) {
                         val intent = Intent(this, PastLaunches::class.java)
                         startActivity(intent)
-                    }
                 }
             }
             // Close drawer when item is clicked
